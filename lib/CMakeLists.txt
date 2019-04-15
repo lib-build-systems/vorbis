@@ -72,28 +72,6 @@ if (NOT BUILD_FRAMEWORK)
     add_library(vorbisenc ${VORBISENC_SOURCES})
     add_library(vorbisfile ${VORBISFILE_SOURCES})
 
-    get_version_info(VORBIS_VERSION_INFO "V_LIB_CURRENT" "V_LIB_AGE" "V_LIB_REVISION")
-    set_target_properties(vorbis PROPERTIES SOVERSION ${VORBIS_VERSION_INFO})
-    get_version_info(VORBISENC_VERSION_INFO "VE_LIB_CURRENT" "VE_LIB_AGE" "VE_LIB_REVISION")
-    set_target_properties(vorbisenc PROPERTIES SOVERSION ${VORBISENC_VERSION_INFO})
-    get_version_info(VORBISFILE_VERSION_INFO "VF_LIB_CURRENT" "VF_LIB_AGE" "VF_LIB_REVISION")
-    set_target_properties(vorbisfile PROPERTIES SOVERSION ${VORBISFILE_VERSION_INFO})
-
-    target_link_libraries(vorbis ${OGG_LIBRARIES})
-    target_link_libraries(vorbisenc ${OGG_LIBRARIES} vorbis)
-    target_link_libraries(vorbisfile ${OGG_LIBRARIES} vorbis)
-
-    install(FILES ${VORBIS_PUBLIC_HEADERS}
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/vorbis)
-
-    install(TARGETS vorbis     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    install(TARGETS vorbisenc  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    install(TARGETS vorbisfile RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-    install(EXPORT vorbis     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
-    install(EXPORT vorbisenc  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
-    install(EXPORT vorbisfile DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
-
     target_include_directories(vorbis   PRIVATE
                                             $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
                                             $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
@@ -112,6 +90,31 @@ if (NOT BUILD_FRAMEWORK)
                                             PUBLIC
                                                 $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                                 )
+    get_version_info(VORBIS_VERSION_INFO "V_LIB_CURRENT" "V_LIB_AGE" "V_LIB_REVISION")
+    set_target_properties(vorbis PROPERTIES SOVERSION ${VORBIS_VERSION_INFO})
+    get_version_info(VORBISENC_VERSION_INFO "VE_LIB_CURRENT" "VE_LIB_AGE" "VE_LIB_REVISION")
+    set_target_properties(vorbisenc PROPERTIES SOVERSION ${VORBISENC_VERSION_INFO})
+    get_version_info(VORBISFILE_VERSION_INFO "VF_LIB_CURRENT" "VF_LIB_AGE" "VF_LIB_REVISION")
+    set_target_properties(vorbisfile PROPERTIES SOVERSION ${VORBISFILE_VERSION_INFO})
+
+    target_link_libraries(vorbis ${OGG_LIBRARIES})
+    target_link_libraries(vorbisenc ${OGG_LIBRARIES} vorbis)
+    target_link_libraries(vorbisfile ${OGG_LIBRARIES} vorbis)
+
+    install(FILES ${VORBIS_PUBLIC_HEADERS}
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/vorbis)
+
+    install(TARGETS vorbis vorbisenc vorbisfile
+            EXPORT vorbis vorbisenc vorbisfile
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+    install(EXPORT vorbis     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
+    install(EXPORT vorbisenc  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
+    install(EXPORT vorbisfile DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
+
 else()
     add_library(vorbis ${VORBIS_PUBLIC_HEADERS} ${VORBIS_HEADERS} ${VORBIS_SOURCES} ${VORBISFILE_SOURCES} ${VORBISENC_SOURCES})
     set_target_properties(vorbis PROPERTIES
