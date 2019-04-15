@@ -76,19 +76,19 @@ if (NOT BUILD_FRAMEWORK)
                                             $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
                                             $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
                                         PUBLIC
-                                            $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                                            $<INSTALL_INTERFACE:include/vorbis>
                                 )
     target_include_directories(vorbisenc    PRIVATE
                                                 $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
                                                 $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
                                             PUBLIC
-                                                $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                                                $<INSTALL_INTERFACE:include/vorbis>
                                 )
     target_include_directories(vorbisfile   PRIVATE
                                                 $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
                                                 $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
                                             PUBLIC
-                                                $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                                                $<INSTALL_INTERFACE:include/vorbis>
                                 )
     get_version_info(VORBIS_VERSION_INFO "V_LIB_CURRENT" "V_LIB_AGE" "V_LIB_REVISION")
     set_target_properties(vorbis PROPERTIES SOVERSION ${VORBIS_VERSION_INFO})
@@ -104,15 +104,28 @@ if (NOT BUILD_FRAMEWORK)
     install(FILES ${VORBIS_PUBLIC_HEADERS}
             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/vorbis)
 
-    install(TARGETS vorbis vorbisenc vorbisfile
-            EXPORT vorbis vorbisenc vorbisfile
+    install(TARGETS vorbis
+            EXPORT vorbis
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
     install(EXPORT vorbis     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
+
+    install(TARGETS vorbisenc
+            EXPORT vorbisenc
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(EXPORT vorbisenc  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
+
+    install(TARGETS vorbisfile
+            EXPORT vorbisfile
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(EXPORT vorbisfile DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
 
 else()
