@@ -67,10 +67,6 @@ if(MSVC)
     list(APPEND VORBISFILE_SOURCES ../win32/vorbisfile.def)
 endif()
 
-include_directories(../include)
-include_directories(.)
-include_directories(${OGG_INCLUDE_DIRS})
-
 if (NOT BUILD_FRAMEWORK)
     add_library(vorbis ${VORBIS_HEADERS} ${VORBIS_SOURCES})
     add_library(vorbisenc ${VORBISENC_SOURCES})
@@ -87,7 +83,8 @@ if (NOT BUILD_FRAMEWORK)
     target_link_libraries(vorbisenc ${OGG_LIBRARIES} vorbis)
     target_link_libraries(vorbisfile ${OGG_LIBRARIES} vorbis)
 
-    install(FILES ${VORBIS_PUBLIC_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/vorbis)
+    install(FILES ${VORBIS_PUBLIC_HEADERS}
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/vorbis)
 
     install(TARGETS vorbis     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(TARGETS vorbisenc  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
@@ -96,6 +93,25 @@ if (NOT BUILD_FRAMEWORK)
     install(EXPORT vorbis     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
     install(EXPORT vorbisenc  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
     install(EXPORT vorbisfile DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
+
+    target_include_directories(vorbis   PRIVATE
+                                            $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+                                            $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
+                                        PUBLIC
+                                            $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                                )
+    target_include_directories(vorbisenc    PRIVATE
+                                                $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+                                                $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
+                                            PUBLIC
+                                                $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                                )
+    target_include_directories(vorbisfile   PRIVATE
+                                                $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+                                                $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
+                                            PUBLIC
+                                                $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+                                )
 else()
     add_library(vorbis ${VORBIS_PUBLIC_HEADERS} ${VORBIS_HEADERS} ${VORBIS_SOURCES} ${VORBISFILE_SOURCES} ${VORBISENC_SOURCES})
     set_target_properties(vorbis PROPERTIES
