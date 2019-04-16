@@ -67,6 +67,10 @@ if (MSVC)
     list(APPEND VORBISFILE_SOURCES ../win32/vorbisfile.def)
 endif ()
 
+message (">>>>>>> vorbis >>>>> CMAKE_CURRENT_LIST_DIR : ${CMAKE_CURRENT_LIST_DIR}")
+message (">>>>>>> vorbis >>>>> CMAKE_CURRENT_SOURCE_DIR : ${CMAKE_CURRENT_SOURCE_DIR}")
+message (">>>>>>> vorbis >>>>> CMAKE_SOURCE_DIR : ${CMAKE_SOURCE_DIR}")
+
 if (NOT BUILD_FRAMEWORK)
     add_library(vorbis ${VORBIS_HEADERS} ${VORBIS_SOURCES})
     add_library(vorbisenc ${VORBISENC_SOURCES})
