@@ -77,19 +77,19 @@ if (NOT BUILD_FRAMEWORK)
     add_library(vorbisfile ${VORBISFILE_SOURCES})
 
     target_include_directories(vorbis   PRIVATE
-                                            $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+                                            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
                                             $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
                                         PUBLIC
                                             $<INSTALL_INTERFACE:include/vorbis>
                                 )
     target_include_directories(vorbisenc    PRIVATE
-                                                $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+                                                $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
                                                 $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
                                             PUBLIC
                                                 $<INSTALL_INTERFACE:include/vorbis>
                                 )
     target_include_directories(vorbisfile   PRIVATE
-                                                $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+                                                $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
                                                 $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
                                             PUBLIC
                                                 $<INSTALL_INTERFACE:include/vorbis>
