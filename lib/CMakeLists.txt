@@ -57,15 +57,15 @@ set(VORBISENC_SOURCES
     vorbisenc.c
 )
 
-if(WIN32)
+if (WIN32)
     list(APPEND VORBIS_SOURCES vorbisenc.c)
-endif()
+endif ()
 
-if(MSVC)
+if (MSVC)
     list(APPEND VORBIS_SOURCES ../win32/vorbis.def)
     list(APPEND VORBISENC_SOURCES ../win32/vorbisenc.def)
     list(APPEND VORBISFILE_SOURCES ../win32/vorbisfile.def)
-endif()
+endif ()
 
 if (NOT BUILD_FRAMEWORK)
     add_library(vorbis ${VORBIS_HEADERS} ${VORBIS_SOURCES})
@@ -105,30 +105,33 @@ if (NOT BUILD_FRAMEWORK)
             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/vorbis)
 
     install(TARGETS vorbis
-            EXPORT vorbis
+            EXPORT vorbis-targets
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    install(EXPORT vorbis     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
+    install(EXPORT vorbis-targets
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
 
     install(TARGETS vorbisenc
-            EXPORT vorbisenc
+            EXPORT vorbisenc-targets
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    install(EXPORT vorbisenc  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
+    install(EXPORT vorbisenc-targets
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
 
     install(TARGETS vorbisfile
-            EXPORT vorbisfile
+            EXPORT vorbisfile-targets
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    install(EXPORT vorbisfile DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
+    install(EXPORT vorbisfile-targets
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
 
-else()
+else ()
     add_library(vorbis ${VORBIS_PUBLIC_HEADERS} ${VORBIS_HEADERS} ${VORBIS_SOURCES} ${VORBISFILE_SOURCES} ${VORBISENC_SOURCES})
     set_target_properties(vorbis PROPERTIES
         FRAMEWORK TRUE
@@ -141,4 +144,4 @@ else()
         OUTPUT_NAME Vorbis
     )
     target_link_libraries(vorbis PUBLIC ${OGG_LIBRARIES})
-endif()
+endif ()
