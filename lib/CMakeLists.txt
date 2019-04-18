@@ -115,6 +115,7 @@ if (NOT BUILD_FRAMEWORK)
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(EXPORT vorbis-targets
+            NAMESPACE vorbis::
             DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
 
     install(TARGETS vorbisenc
@@ -124,6 +125,7 @@ if (NOT BUILD_FRAMEWORK)
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(EXPORT vorbisenc-targets
+            NAMESPACE vorbis::
             DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
 
     install(TARGETS vorbisfile
@@ -133,6 +135,7 @@ if (NOT BUILD_FRAMEWORK)
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             FRAMEWORK DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(EXPORT vorbisfile-targets
+            NAMESPACE vorbis::
             DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/vorbis)
 
 else ()
