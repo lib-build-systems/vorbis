@@ -67,10 +67,6 @@ if (MSVC)
     list(APPEND VORBISFILE_SOURCES ../win32/vorbisfile.def)
 endif ()
 
-message (">>>>>>> vorbis >>>>> CMAKE_CURRENT_LIST_DIR : ${CMAKE_CURRENT_LIST_DIR}")
-message (">>>>>>> vorbis >>>>> CMAKE_CURRENT_SOURCE_DIR : ${CMAKE_CURRENT_SOURCE_DIR}")
-message (">>>>>>> vorbis >>>>> CMAKE_SOURCE_DIR : ${CMAKE_SOURCE_DIR}")
-
 if (NOT BUILD_FRAMEWORK)
     add_library(vorbis ${VORBIS_HEADERS} ${VORBIS_SOURCES})
     add_library(vorbisenc ${VORBISENC_SOURCES})
@@ -78,18 +74,21 @@ if (NOT BUILD_FRAMEWORK)
 
     target_include_directories(vorbis   PRIVATE
                                             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+                                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                                             $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
                                         PUBLIC
                                             $<INSTALL_INTERFACE:include/vorbis>
                                 )
     target_include_directories(vorbisenc    PRIVATE
                                                 $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+                                                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                                                 $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
                                             PUBLIC
                                                 $<INSTALL_INTERFACE:include/vorbis>
                                 )
     target_include_directories(vorbisfile   PRIVATE
                                                 $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+                                                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                                                 $<BUILD_INTERFACE:${OGG_INCLUDE_DIRS}>
                                             PUBLIC
                                                 $<INSTALL_INTERFACE:include/vorbis>
