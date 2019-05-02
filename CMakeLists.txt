@@ -53,7 +53,9 @@ endfunction()
 message(STATUS "Configuring ${PROJECT_NAME} ${PROJECT_VERSION}")
 
 # Find ogg dependency
-if(NOT OGG_ROOT)
+if (OGG_CMAKE_CONFIG_PATH)
+    include(${OGG_CMAKE_CONFIG_PATH})
+elseif (OGG_ROOT)
     find_package(PkgConfig QUIET)
     pkg_check_modules(PC_OGG QUIET ogg)
     find_path(OGG_INCLUDE_DIRS NAMES ogg/ogg.h HINTS ${PC_OGG_INCLUDE_DIRS} PATH_SUFFIXES ogg)
